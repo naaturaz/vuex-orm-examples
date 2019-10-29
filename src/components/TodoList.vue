@@ -12,6 +12,8 @@
         @input="e => { update(todo, e.target.value) }"
       >
 
+      <div>{{ getTime() }}</div>
+
       <TodoListAssignee :todoId="todo.id" />
 
       <button class="icon" @click="destroy(todo)">
@@ -26,6 +28,7 @@ import Todo from '@/models/Todo'
 import IconCheckCircle from './icons/IconCheckCircle'
 import IconTrash from './icons/IconTrash'
 import TodoListAssignee from './TodoListAssignee'
+import moment from 'moment'
 
 export default {
   components: {
@@ -37,7 +40,8 @@ export default {
   computed: {
     todos () {
       return Todo.query().orderBy('id', 'desc').get()
-    }
+    },
+
   },
 
   methods: {
@@ -51,7 +55,12 @@ export default {
 
     destroy (todo) {
       todo.$delete()
-    }
+    },
+
+    getTime() {
+      let time = new moment().format('hh:mm:ss');
+      return time;
+    },
   }
 }
 </script>
